@@ -7,15 +7,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.listadepeliculas.R
+import com.example.listadepeliculas.ui.home.screen.components.CategoryTitle
 import com.example.listadepeliculas.ui.home.screen.components.HomeHeader
 import com.example.listadepeliculas.ui.home.screen.components.HomeMovieList
+import com.example.listadepeliculas.ui.home.screen.components.HomeRecommended
 
 /**
  * @author : Mingaleev D
@@ -51,6 +57,20 @@ fun HomeScreen(
                 moviePoster = state.popularMovie.map { it.poster }
             )
          }
+      }
+      item {
+         Spacer(modifier = Modifier.height(16.dp))
+         // CategoryTitle(title = stringResource(id = R.string.recommended_movie))
+         HomeRecommended(
+             selectedFilter = state.selectedFilter,
+             onFilterClick = {
+
+             },
+             moveList = state.filteredMovies,
+             onMovieClick = {
+
+             }
+         )
       }
    }
    if (state.isLoading) {
