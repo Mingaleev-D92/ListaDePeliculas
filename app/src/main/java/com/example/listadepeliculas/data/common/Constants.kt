@@ -8,6 +8,7 @@ object Constants {
 
    const val BASE_API_KEY = BuildConfig.API_KEY
    const val BASE_URL = "https://api.themoviedb.org/3/"
-   const val END_POINT = "movie/upcoming"
+   const val END_POINT_UPCOMING = "movie/upcoming"
+   const val END_POINT_POPULAR= "movie/popular"
    const val POSTER_POINT = "https://image.tmdb.org/t/p/w500"
 }

@@ -11,6 +11,7 @@ import com.example.listadepeliculas.domain.model.Movie
 
 fun ResultM.toDomain(): Movie {
    return Movie(
+       id = this.id,
        description = this.overview,
        title = this.title,
        releaseDate = this.releaseDate,//.substring(0, 4).toInt(),

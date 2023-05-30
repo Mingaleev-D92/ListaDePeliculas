@@ -8,6 +8,6 @@ import com.example.listadepeliculas.domain.model.Movie
  */
 
 interface MovieRepository {
-
    suspend fun getUpcomingMovie(): Result<List<Movie>>
+   suspend fun getPopularMovie(): Result<List<Movie>>
 }

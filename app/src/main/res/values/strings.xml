@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ListaDePeliculas</string>
-    <string name="to_be_movie">Ожидаемые фильмы</string>
+    <string name="to_be_movie">Ожидаемые…</string>
+    <string name="popular_movie">Популярные…</string>
 </resources>

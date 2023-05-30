@@ -15,10 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
 /**
  * @author : Mingaleev D
@@ -45,7 +47,11 @@ fun HomeMovieList(
       ) {
          items(moviePoster) {
             AsyncImage(
-                model = it, contentDescription = null,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(it)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
                 modifier = Modifier
                     .size(width = 138.dp, height = 180.dp)
                     .clip(RoundedCornerShape(8.dp)),
