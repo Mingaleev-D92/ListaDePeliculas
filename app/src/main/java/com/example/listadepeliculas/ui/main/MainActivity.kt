@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.listadepeliculas.ui.home.screen.HomeScreen
+import com.example.listadepeliculas.ui.theme.BlackBack
 import com.example.listadepeliculas.ui.theme.ListaDePeliculasTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
          ListaDePeliculasTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colors.background
+                color = BlackBack
             ) {
                val navController = rememberNavController()
                NavHost(navController = navController, startDestination = "Home") {
