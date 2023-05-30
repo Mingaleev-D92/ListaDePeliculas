@@ -1,6 +1,7 @@
 package com.example.listadepeliculas.domain.model
 
 data class Movie(
+    val id:Int,
     val description: String,
     val title: String,
     val releaseDate: String,
