@@ -2,6 +2,7 @@ package com.example.listadepeliculas.data.remote.dto
 
 
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class ResultM(
     @SerializedName("adult")

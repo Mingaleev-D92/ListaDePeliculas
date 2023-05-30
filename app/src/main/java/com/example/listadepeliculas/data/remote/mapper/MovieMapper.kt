@@ -13,7 +13,7 @@ fun ResultM.toDomain(): Movie {
    return Movie(
        description = this.overview,
        title = this.title,
-       releaseDate = this.releaseDate.substring(0, 4),
+       releaseDate = this.releaseDate,//.substring(0, 4).toInt(),
        originalLanguage = this.originalLanguage,
        rating = this.voteAverage,
        poster = POSTER_POINT + this.posterPath,

@@ -9,5 +9,5 @@ import com.example.listadepeliculas.domain.model.Movie
 
 interface MovieRepository {
 
-   suspend fun getUpcomingMovie():List<Movie>
+   suspend fun getUpcomingMovie(): Result<List<Movie>>
 }

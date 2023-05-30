@@ -13,7 +13,12 @@ import com.example.listadepeliculas.domain.model.Movie
 class MovieRepositoryImpl(
     private val api: ApiService
 ) : MovieRepository {
-   override suspend fun getUpcomingMovie(): List<Movie> {
-      return api.getUpcomingMovie().results.map { it.toDomain() }
+   override suspend fun getUpcomingMovie(): Result<List<Movie>> {
+      return try {
+         val resut = api.getUpcomingMovie().results
+         Result.success(resut.map { it.toDomain() })
+      } catch (e: Exception) {
+         Result.failure(e)
+      }
    }
 }
