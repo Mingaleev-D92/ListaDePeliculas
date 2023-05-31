@@ -1,6 +1,7 @@
 package com.example.listadepeliculas.data.repository
 
 import com.example.listadepeliculas.data.common.extensions.resultOf
+import com.example.listadepeliculas.data.local.MovieDao
 import com.example.listadepeliculas.data.remote.api.ApiService
 import com.example.listadepeliculas.data.remote.mapper.toDomain
 import com.example.listadepeliculas.domain.MovieRepository
@@ -20,7 +21,8 @@ import com.example.listadepeliculas.domain.model.Movie
  */
 
 class MovieRepositoryImpl(
-    private val api: ApiService
+    private val api: ApiService,
+    private val dao:MovieDao
 ) : MovieRepository {
    override suspend fun getUpcomingMovie() = resultOf {
       val results = api.getUpcomingMovie().results
