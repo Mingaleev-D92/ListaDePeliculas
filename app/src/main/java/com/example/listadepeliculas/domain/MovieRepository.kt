@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
    fun getUpcomingMovie(): Flow<List<Movie>>
-   suspend fun getPopularMovie(): Result<List<Movie>>
-   suspend fun getMovieEngFilter(withOrigLang: String): Result<List<Movie>>
-   suspend fun getMovieEsFilter(withOrigLang: String): Result<List<Movie>>
+   fun getPopularMovie(): Flow<List<Movie>>
+   fun getMovieEngFilter(withOrigLang: String): Flow<List<Movie>>
+   fun getMovieEsFilter(withOrigLang: String): Flow<List<Movie>>
 }

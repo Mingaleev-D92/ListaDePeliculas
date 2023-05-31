@@ -48,18 +48,60 @@ class MovieRepositoryImpl(
       }
    }
 
-   override suspend fun getPopularMovie() = resultOf {
+   private suspend fun getPopularMovieRemote() = resultOf {
       val results = api.getPopularMovie().results
-      results.map { it.toDomain() }
+      val movies = results.map { it.toDomain() }
+      movies.forEach { dao.insertMovie(it.toEntity(MovieType.TRENDING_POPULAR)) }
+      movies
    }
 
-   override suspend fun getMovieEngFilter(withOrigLang: String) = resultOf {
+   override fun getPopularMovie(): Flow<List<Movie>> {
+      return flow {
+         val localMovies = dao.getMovies().filter { it.type == MovieType.TRENDING_POPULAR }
+         emit(localMovies.map { it.toDomain() })
+         getPopularMovieRemote().onSuccess {
+            emit(it)
+         }.onFailure {
+            println()
+         }
+      }
+   }
+
+   private suspend fun getMovieEngFilterRemote(withOrigLang: String) = resultOf {
       val results = api.getMovieEngFilter(withOrigLang = withOrigLang).results
-      results.map { it.toDomain() }
+      val movies = results.map { it.toDomain() }
+      movies.forEach { dao.insertMovie(it.toEntity(MovieType.ENGLISH_LANG)) }
+      movies
    }
 
-   override suspend fun getMovieEsFilter(withOrigLang: String) = resultOf {
+   override fun getMovieEngFilter(withOrigLang: String): Flow<List<Movie>> {
+      return flow {
+         val localMovies = dao.getMovies().filter { it.type == MovieType.ENGLISH_LANG }
+         emit(localMovies.map { it.toDomain() })
+         getMovieEngFilterRemote(withOrigLang = withOrigLang).onSuccess {
+            emit(it)
+         }.onFailure {
+            println()
+         }
+      }
+   }
+
+   private suspend fun getMovieEsFilterRemote(withOrigLang: String) = resultOf {
       val results = api.getMovieEsFilter(withOrigLang = withOrigLang).results
-      results.map { it.toDomain() }
+      val movies = results.map { it.toDomain() }
+      movies.forEach { dao.insertMovie(it.toEntity(MovieType.SPAIN_LANG)) }
+      movies
+   }
+
+   override fun getMovieEsFilter(withOrigLang: String): Flow<List<Movie>> {
+      return flow {
+         val localMovies = dao.getMovies().filter { it.type == MovieType.SPAIN_LANG }
+         emit(localMovies.map { it.toDomain() })
+         getMovieEsFilterRemote(withOrigLang = withOrigLang).onSuccess {
+            emit(it)
+         }.onFailure {
+            println()
+         }
+      }
    }
 }

@@ -47,13 +47,11 @@ class HomeViewModel @Inject constructor(
    }
 
    private suspend fun getPopularMovie() {
-      repository.getPopularMovie()
-          .onSuccess {
-             state = state.copy(popularMovie = it)
-          }
-          .onFailure {
-             println()
-          }
+      repository.getPopularMovie().collect{
+         state = state.copy(
+             popularMovie = it
+         )
+      }
    }
 
    fun onEvent(event: HomeEvent) {
@@ -78,12 +76,10 @@ class HomeViewModel @Inject constructor(
          FilterType.ENGLISH -> repository.getMovieEngFilter("en")
          FilterType.RELEASED -> repository.getMovieEsFilter("es")
       }
-      jobResult.onSuccess {
+      jobResult.collect{
          state = state.copy(
              filteredMovies = it
          )
-      }.onFailure {
-
       }
    }
 }
