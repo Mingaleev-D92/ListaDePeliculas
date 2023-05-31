@@ -20,20 +20,16 @@ import com.example.listadepeliculas.domain.model.Movie
 fun HomeRecommended(
     selectedFilter: FilterType,
     onFilterClick: (FilterType) -> Unit,
-    moveList: List<Movie>,
     modifier: Modifier = Modifier,
-    onMovieClick: (Movie) -> Unit,
 ) {
-   if (moveList.isNotEmpty()) {
-      Column(modifier = modifier.fillMaxWidth()) {
-         CategoryTitle(title = stringResource(id = R.string.recommended_movie))
-         Spacer(modifier = Modifier.height(12.dp))
-         FilterPillContainer(
-             filters = FilterType.values().toList(),
-             selectedFilter = selectedFilter,
-             onFilterClick = onFilterClick
-         )
-      }
+   Column(modifier = modifier.fillMaxWidth()) {
+      CategoryTitle(title = stringResource(id = R.string.recommended_movie))
+      Spacer(modifier = Modifier.height(12.dp))
+      FilterPillContainer(
+          filters = FilterType.values().toList(),
+          selectedFilter = selectedFilter,
+          onFilterClick = onFilterClick
+      )
    }
 }
 

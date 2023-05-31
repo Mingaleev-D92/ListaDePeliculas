@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    val repository: MovieRepository
+    private val repository: MovieRepository
 ) : ViewModel() {
    var state by mutableStateOf(HomeState())
       private set

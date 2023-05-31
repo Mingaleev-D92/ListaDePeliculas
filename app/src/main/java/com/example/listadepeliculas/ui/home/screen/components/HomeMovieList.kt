@@ -46,17 +46,7 @@ fun HomeMovieList(
           horizontalArrangement = Arrangement.spacedBy(12.dp)
       ) {
          items(moviePoster) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(it)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(width = 138.dp, height = 180.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
-            )
+            HomePoster(it, MoviePosterSize.SMALL)
          }
       }
    }

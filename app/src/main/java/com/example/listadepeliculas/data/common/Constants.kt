@@ -2,8 +2,6 @@ package com.example.listadepeliculas.data.common
 
 import com.example.listadepeliculas.BuildConfig
 
-//https://api.themoviedb.org/3/movie/upcoming?api_key=&language=ru-RU
-
 object Constants {
 
    const val BASE_API_KEY = BuildConfig.API_KEY
@@ -15,4 +13,5 @@ object Constants {
    const val SORT_BY = "popularity.desc"
    const val LANGUAGE_EN = "en"
    const val LANGUAGE_ES = "es"
+   const val COUNT_IN_GRID = 2
 }
