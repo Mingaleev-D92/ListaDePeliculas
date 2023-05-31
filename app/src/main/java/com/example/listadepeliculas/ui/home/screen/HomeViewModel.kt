@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.listadepeliculas.domain.MovieRepository
 import com.example.listadepeliculas.ui.home.screen.components.FilterType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import javax.inject.Inject
@@ -38,13 +39,11 @@ class HomeViewModel @Inject constructor(
    }
 
    private suspend fun getUpcomingMovie() {
-      repository.getUpcomingMovie()
-          .onSuccess {
-             state = state.copy(upcomingMovie = it)
-          }
-          .onFailure {
-             println()
-          }
+      repository.getUpcomingMovie().collect{
+         state = state.copy(
+             upcomingMovie = it
+         )
+      }
    }
 
    private suspend fun getPopularMovie() {

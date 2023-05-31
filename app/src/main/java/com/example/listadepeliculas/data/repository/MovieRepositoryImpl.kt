@@ -2,10 +2,14 @@ package com.example.listadepeliculas.data.repository
 
 import com.example.listadepeliculas.data.common.extensions.resultOf
 import com.example.listadepeliculas.data.local.MovieDao
+import com.example.listadepeliculas.data.local.entities.MovieType
 import com.example.listadepeliculas.data.remote.api.ApiService
 import com.example.listadepeliculas.data.remote.mapper.toDomain
+import com.example.listadepeliculas.data.remote.mapper.toEntity
 import com.example.listadepeliculas.domain.MovieRepository
 import com.example.listadepeliculas.domain.model.Movie
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 /**
  * @author : Mingaleev D
@@ -22,11 +26,26 @@ import com.example.listadepeliculas.domain.model.Movie
 
 class MovieRepositoryImpl(
     private val api: ApiService,
-    private val dao:MovieDao
+    private val dao: MovieDao
 ) : MovieRepository {
-   override suspend fun getUpcomingMovie() = resultOf {
+
+   private suspend fun getUpcomingMoviesRemote() = resultOf {
       val results = api.getUpcomingMovie().results
-      results.map { it.toDomain() }
+      val movies = results.map { it.toDomain() }
+      movies.forEach { dao.insertMovie(it.toEntity(MovieType.UPCOMING)) }
+      movies
+   }
+
+   override fun getUpcomingMovie(): Flow<List<Movie>> {
+      return flow {
+         val localMovies = dao.getMovies().filter { it.type == MovieType.UPCOMING }
+         emit(localMovies.map { it.toDomain() })
+         getUpcomingMoviesRemote().onSuccess {
+            emit(it)
+         }.onFailure {
+            println()
+         }
+      }
    }
 
    override suspend fun getPopularMovie() = resultOf {
