@@ -32,7 +32,7 @@ fun HomeHeader(
    Box(
        modifier = modifier
            .fillMaxWidth()
-           .height(70.dp),
+           .height(60.dp),
        contentAlignment = Alignment.Center
    ) {
       Row(

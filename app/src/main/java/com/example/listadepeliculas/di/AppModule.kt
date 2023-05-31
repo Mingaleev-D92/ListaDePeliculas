@@ -1,7 +1,11 @@
 package com.example.listadepeliculas.di
 
+import android.app.Application
+import androidx.room.Room
 import com.example.listadepeliculas.data.common.Constants.BASE_URL
 import com.example.listadepeliculas.data.interceptor.ApiKeyInterceptor
+import com.example.listadepeliculas.data.local.MovieDao
+import com.example.listadepeliculas.data.local.MovieDatabase
 import com.example.listadepeliculas.data.remote.api.ApiService
 import com.example.listadepeliculas.data.repository.MovieRepositoryImpl
 import com.example.listadepeliculas.domain.MovieRepository
@@ -13,7 +17,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
 
@@ -43,8 +46,21 @@ object AppModule {
    @Provides
    @Singleton
    fun provideRepository(
-       api: ApiService
+       api: ApiService,
+       dao: MovieDao
    ): MovieRepository {
-      return MovieRepositoryImpl(api)
+      return MovieRepositoryImpl(api, dao)
+   }
+
+   @Provides
+   @Singleton
+   fun provideDatabase(application: Application): MovieDatabase {
+      return Room.databaseBuilder(application, MovieDatabase::class.java, "movie_db").build()
+   }
+
+   @Provides
+   @Singleton
+   fun provideDatabaseDao(database: MovieDatabase): MovieDao {
+      return database.dao
    }
 }

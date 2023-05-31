@@ -6,6 +6,6 @@ package com.example.listadepeliculas.ui.home.screen.components
  */
 
 enum class FilterType(val nameText: String) {
-   ENGLISH("English"),
-   RELEASED("in 2000")
+   ENGLISH("English language"),
+   RELEASED("Español")
 }

@@ -32,8 +32,8 @@ fun FilterPill(
     onClick: () -> Unit,
 ) {
 
-   val backgroundColor = if (isSelected) Color.Black else Color.White
-   val textColor = if (isSelected) Color.White else Color.Black
+   val backgroundColor = if (isSelected) Color.White else Color.Black
+   val textColor = if (isSelected) Color.Black else Color.White
 
    Box(
        modifier = modifier
@@ -43,15 +43,14 @@ fun FilterPill(
            }
            .background(backgroundColor)
            .then(
-               if (isSelected) {
+               if (!isSelected) {
                   modifier.border((0.5).dp, color = Color.White, RoundedCornerShape(20.dp))
                } else {
                   modifier
                }
            )
 
-           .padding(vertical = 8.dp)
-           .width(100.dp),
+           .padding(vertical = 8.dp, horizontal = 18.dp),
        contentAlignment = Alignment.Center
    ) {
       Text(
