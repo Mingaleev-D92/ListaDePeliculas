@@ -31,4 +31,14 @@ class MovieRepositoryImpl(
       val results = api.getPopularMovie().results
       results.map { it.toDomain() }
    }
+
+   override suspend fun getMovieEngFilter(withOrigLang: String) = resultOf {
+      val results = api.getMovieEngFilter(withOrigLang = withOrigLang).results
+      results.map { it.toDomain() }
+   }
+
+   override suspend fun getMovieEsFilter(withOrigLang: String) = resultOf {
+      val results = api.getMovieEsFilter(withOrigLang = withOrigLang).results
+      results.map { it.toDomain() }
+   }
 }

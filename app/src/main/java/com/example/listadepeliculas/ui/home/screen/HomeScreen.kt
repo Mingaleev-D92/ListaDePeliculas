@@ -60,11 +60,10 @@ fun HomeScreen(
       }
       item {
          Spacer(modifier = Modifier.height(16.dp))
-         // CategoryTitle(title = stringResource(id = R.string.recommended_movie))
          HomeRecommended(
              selectedFilter = state.selectedFilter,
              onFilterClick = {
-
+                viewModel.onEvent(HomeEvent.ChangeFilter(it))
              },
              moveList = state.filteredMovies,
              onMovieClick = {

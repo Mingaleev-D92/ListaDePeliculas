@@ -11,4 +11,8 @@ object Constants {
    const val END_POINT_UPCOMING = "movie/upcoming"
    const val END_POINT_POPULAR= "movie/popular"
    const val POSTER_POINT = "https://image.tmdb.org/t/p/w500"
+   const val FILTER_DIS = "discover/movie"
+   const val SORT_BY = "popularity.desc"
+   const val LANGUAGE_EN = "en"
+   const val LANGUAGE_ES = "es"
 }

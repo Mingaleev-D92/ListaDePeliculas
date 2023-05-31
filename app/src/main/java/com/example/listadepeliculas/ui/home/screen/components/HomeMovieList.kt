@@ -40,7 +40,7 @@ fun HomeMovieList(
           fontSize = 20.sp,
           color = Color.White,
       )
-      Spacer(modifier = Modifier.height(20.dp))
+      Spacer(modifier = Modifier.height(16.dp))
       LazyRow(
           modifier = Modifier.fillMaxWidth(),
           horizontalArrangement = Arrangement.spacedBy(12.dp)
