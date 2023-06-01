@@ -1,5 +1,7 @@
 package com.example.listadepeliculas.data.repository
 
+import com.example.listadepeliculas.data.common.Constants.LANGUAGE_EN
+import com.example.listadepeliculas.data.common.Constants.LANGUAGE_ES
 import com.example.listadepeliculas.data.common.extensions.resultOf
 import com.example.listadepeliculas.data.local.MovieDao
 import com.example.listadepeliculas.data.local.entities.MovieEntity
@@ -31,55 +33,18 @@ class MovieRepositoryImpl(
       movies
    }
 
-//   override fun getUpcomingMovie(): Flow<List<Movie>> {
-//      return flow {
-//         val localMovies = dao.getMovies().filter { it.type == MovieType.UPCOMING }
-//         emit(localMovies.map { it.toDomain() })
-//         getUpcomingMoviesRemote().onSuccess {
-//            emit(it)
-//         }.onFailure {
-//            println()
-//         }
-//      }
-//   }
 
    private suspend fun getPopularMovieRemote() = resultOf {
       val results = api.getPopularMovie().results
       val movies = results.map { it.toDomain() }
-     // movies.forEach { dao.insertMovie(it.toEntity(MovieType.TRENDING_POPULAR)) }
       movies
    }
-
-//   override fun getPopularMovie(): Flow<List<Movie>> {
-//      return flow {
-//         val localMovies = dao.getMovies().filter { it.type == MovieType.TRENDING_POPULAR }
-//         emit(localMovies.map { it.toDomain() })
-//         getPopularMovieRemote().onSuccess {
-//            emit(it)
-//         }.onFailure {
-//            println()
-//         }
-//      }
-//   }
 
    private suspend fun getMovieEngFilterRemote(withOrigLang: String) = resultOf {
       val results = api.getMovieEngFilter(withOrigLang = withOrigLang).results
       val movies = results.map { it.toDomain() }
-      //movies.forEach { dao.insertMovie(it.toEntity(MovieType.ENGLISH_LANG)) }
       movies
    }
-
-//   override fun getMovieEngFilter(withOrigLang: String): Flow<List<Movie>> {
-//      return flow {
-//         val localMovies = dao.getMovies().filter { it.type == MovieType.ENGLISH_LANG }
-//         emit(localMovies.map { it.toDomain() })
-//         getMovieEngFilterRemote(withOrigLang = withOrigLang).onSuccess {
-//            emit(it)
-//         }.onFailure {
-//            println()
-//         }
-//      }
-//   }
 
    private suspend fun getMovieEsFilterRemote(withOrigLang: String) = resultOf {
       val results = api.getMovieEsFilter(withOrigLang = withOrigLang).results
@@ -88,35 +53,36 @@ class MovieRepositoryImpl(
       movies
    }
 
-//   override fun getMovieEsFilter(withOrigLang: String): Flow<List<Movie>> {
-//      return flow {
-//         val localMovies = dao.getMovies().filter { it.type == MovieType.SPAIN_LANG }
-//         emit(localMovies.map { it.toDomain() })
-//         getMovieEsFilterRemote(withOrigLang = withOrigLang).onSuccess {
-//            emit(it)
-//         }.onFailure {
-//            println()
-//         }
-//      }
-//   }
 
-   //---------------------------------------------------------
-
-   override fun getAllMovies(filterType: FilterType): Flow<MovieList> {
+   override fun getAllMovies(filterType: FilterType, isFilterOnly:Boolean): Flow<MovieList> {
       return flow {
          emit(getMovieListLocal(filterType))
 
-         getUpcomingMoviesRemote().onSuccess {
-            saveMoviesLocal(it, MovieType.UPCOMING)
-            emit(getMovieListLocal(filterType))
-         }.onFailure {
-            println()
-         }
-         getPopularMovieRemote().onSuccess {
-            saveMoviesLocal(it, MovieType.TRENDING_POPULAR)
-            emit(getMovieListLocal(filterType))
-         }.onFailure {
-            println()
+         if(!isFilterOnly){
+            getUpcomingMoviesRemote().onSuccess {
+               saveMoviesLocal(it, MovieType.UPCOMING)
+               emit(getMovieListLocal(filterType))
+            }.onFailure {
+               println()
+            }
+            getPopularMovieRemote().onSuccess {
+               saveMoviesLocal(it, MovieType.TRENDING_POPULAR)
+               emit(getMovieListLocal(filterType))
+            }.onFailure {
+               println()
+            }
+            getMovieEngFilterRemote(LANGUAGE_EN).onSuccess {
+               saveMoviesLocal(it, MovieType.ENGLISH_LANG)
+               emit(getMovieListLocal(filterType))
+            }.onFailure {
+               println()
+            }
+            getMovieEsFilterRemote(LANGUAGE_ES).onSuccess {
+               saveMoviesLocal(it, MovieType.SPAIN_LANG)
+               emit(getMovieListLocal(filterType))
+            }.onFailure {
+               println()
+            }
          }
       }
    }

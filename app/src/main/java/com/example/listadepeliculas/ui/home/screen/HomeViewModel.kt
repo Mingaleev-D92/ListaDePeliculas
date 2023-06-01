@@ -6,9 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.listadepeliculas.domain.MovieRepository
-import com.example.listadepeliculas.domain.model.FilterType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import javax.inject.Inject
@@ -30,16 +28,14 @@ class HomeViewModel @Inject constructor(
       viewModelScope.launch {
          supervisorScope {
             val movies = launch { getAllMovies() }
-           // val popular = launch { getPopularMovie() }
-            val filtered = launch { getMovieFilter() }
-            listOf(movies, filtered).forEach { it.join() }
+            movies.join()
             state = state.copy(isLoading = false)
          }
       }
    }
 
    private suspend fun getAllMovies() {
-      repository.getAllMovies(state.selectedFilter).collect {
+      repository.getAllMovies(state.selectedFilter, false).collect {
          state = state.copy(
              upcomingMovie = it.upcoming,
              popularMovie = it.popular,
@@ -47,23 +43,6 @@ class HomeViewModel @Inject constructor(
          )
       }
    }
-
-   //   private suspend fun getUpcomingMovie() {
-   //      repository.getUpcomingMovie().collect{
-   //         state = state.copy(
-   //             upcomingMovie = it
-   //         )
-   //      }
-   //   }
-   //
-   //   private suspend fun getPopularMovie() {
-   //      repository.getPopularMovie().collect{
-   //         state = state.copy(
-   //             popularMovie = it
-   //         )
-   //      }
-   //   }
-
    fun onEvent(event: HomeEvent) {
       when (event) {
          is HomeEvent.ChangeFilter -> {
@@ -72,24 +51,15 @@ class HomeViewModel @Inject constructor(
                    selectedFilter = event.filterType
                )
                viewModelScope.launch {
-                  getMovieFilter()
+                  repository.getAllMovies(state.selectedFilter, true).collect {
+                     state = state.copy(
+                         filteredMovies = it.filtered
+                     )
+                  }
                }
             }
          }
-
          is HomeEvent.OnMovie -> TODO()
       }
    }
-
-      private suspend fun getMovieFilter() {
-//         val jobResult = when (state.selectedFilter) {
-//            FilterType.ENGLISH -> repository.getMovieEngFilter("en")
-//            FilterType.RELEASED -> repository.getMovieEsFilter("es")
-//         }
-//         jobResult.collect{
-//            state = state.copy(
-//                filteredMovies = it
-//            )
-//         }
-      }
 }

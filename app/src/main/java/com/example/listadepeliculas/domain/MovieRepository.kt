@@ -11,10 +11,5 @@ import kotlinx.coroutines.flow.Flow
  */
 
 interface MovieRepository {
-//   fun getUpcomingMovie(): Flow<List<Movie>>
-//   fun getPopularMovie(): Flow<List<Movie>>
-//   fun getMovieEngFilter(withOrigLang: String): Flow<List<Movie>>
-//   fun getMovieEsFilter(withOrigLang: String): Flow<List<Movie>>
-
-   fun getAllMovies(filterType:FilterType): Flow<MovieList>
+   fun getAllMovies(filterType:FilterType,isFilterOnly:Boolean): Flow<MovieList>
 }
