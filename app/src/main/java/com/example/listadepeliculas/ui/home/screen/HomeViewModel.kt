@@ -59,7 +59,6 @@ class HomeViewModel @Inject constructor(
                }
             }
          }
-         is HomeEvent.OnMovie -> TODO()
       }
    }
 }

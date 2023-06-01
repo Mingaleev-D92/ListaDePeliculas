@@ -3,4 +3,6 @@
     <string name="to_be_movie">Ожидаемые…</string>
     <string name="popular_movie">Популярные…</string>
     <string name="recommended_movie">Рекоментовано для Вас</string>
+    <string name="trailer_movie">Трейлер</string>
+    <string name="plot_movie">Сюжет</string>
 </resources>

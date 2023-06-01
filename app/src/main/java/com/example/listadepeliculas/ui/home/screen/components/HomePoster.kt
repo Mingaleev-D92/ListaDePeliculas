@@ -1,6 +1,6 @@
 package com.example.listadepeliculas.ui.home.screen.components
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -20,7 +20,8 @@ import coil.request.ImageRequest
 @Composable
 fun HomePoster(
     imageUrl: String,
-    posterSize: MoviePosterSize
+    posterSize: MoviePosterSize,
+    onMovieClicked:() -> Unit
 ) {
 
    val height = if(posterSize == MoviePosterSize.SMALL) 180 else 205
@@ -33,8 +34,9 @@ fun HomePoster(
            .build(),
        contentDescription = null,
        modifier = Modifier
+           .clip(RoundedCornerShape(8.dp))
            .size(width = (width).dp, height = (height).dp)
-           .clip(RoundedCornerShape(8.dp)),
+           .clickable { onMovieClicked() },
        contentScale = ContentScale.FillBounds
    )
 }

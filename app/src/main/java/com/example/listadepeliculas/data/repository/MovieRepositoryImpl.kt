@@ -12,6 +12,7 @@ import com.example.listadepeliculas.data.remote.mapper.toEntity
 import com.example.listadepeliculas.domain.MovieRepository
 import com.example.listadepeliculas.domain.model.FilterType
 import com.example.listadepeliculas.domain.model.Movie
+import com.example.listadepeliculas.domain.model.MovieDetail
 import com.example.listadepeliculas.domain.model.MovieList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -54,11 +55,11 @@ class MovieRepositoryImpl(
    }
 
 
-   override fun getAllMovies(filterType: FilterType, isFilterOnly:Boolean): Flow<MovieList> {
+   override fun getAllMovies(filterType: FilterType, isFilterOnly: Boolean): Flow<MovieList> {
       return flow {
          emit(getMovieListLocal(filterType))
 
-         if(!isFilterOnly){
+         if (!isFilterOnly) {
             getUpcomingMoviesRemote().onSuccess {
                saveMoviesLocal(it, MovieType.UPCOMING)
                emit(getMovieListLocal(filterType))
@@ -85,6 +86,10 @@ class MovieRepositoryImpl(
             }
          }
       }
+   }
+
+   override suspend fun getMovieById(id: Int): Result<MovieDetail> = resultOf {
+       api.getDetailsByIdMovie(id).toDomain()
    }
 
    private suspend fun saveMoviesLocal(movies: List<Movie>, movieType: MovieType) {

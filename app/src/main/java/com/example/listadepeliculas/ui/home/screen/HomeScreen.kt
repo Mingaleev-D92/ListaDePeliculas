@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.listadepeliculas.R
 import com.example.listadepeliculas.data.common.Constants.COUNT_IN_GRID
+import com.example.listadepeliculas.domain.model.Movie
 import com.example.listadepeliculas.ui.home.screen.components.HomeHeader
 import com.example.listadepeliculas.ui.home.screen.components.HomeMovieList
 import com.example.listadepeliculas.ui.home.screen.components.HomePoster
@@ -30,7 +31,8 @@ import com.example.listadepeliculas.ui.home.screen.components.MoviePosterSize
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onMovieClick:(Movie) -> Unit
 ) {
    val state = viewModel.state
 
@@ -54,8 +56,10 @@ fun HomeScreen(
          }) {
             HomeMovieList(
                 title = stringResource(id = R.string.to_be_movie),
-                moviePoster = state.upcomingMovie.map { it.poster }
-            )
+                moviePoster = state.upcomingMovie
+            ){
+               onMovieClick(it)
+            }
          }
       }
 
@@ -65,8 +69,10 @@ fun HomeScreen(
          }) {
             HomeMovieList(
                 title = stringResource(id = R.string.popular_movie),
-                moviePoster = state.popularMovie.map { it.poster }
-            )
+                moviePoster = state.popularMovie
+            ){
+               onMovieClick(it)
+            }
          }
       }
 
@@ -83,7 +89,9 @@ fun HomeScreen(
          }
 
          items(state.filteredMovies) {
-            HomePoster(imageUrl = it.poster, posterSize = MoviePosterSize.BIG)
+            HomePoster(imageUrl = it.poster, posterSize = MoviePosterSize.BIG){
+               onMovieClick(it)
+            }
          }
       }
    }

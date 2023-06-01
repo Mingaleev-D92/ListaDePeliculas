@@ -9,18 +9,20 @@ import com.example.listadepeliculas.domain.model.Movie
 /**
  * @author : Mingaleev D
  * @data : 29.05.2023
+ *  description = this.overview,
+   title = this.title,
+   releaseDate = this.releaseDate,//.substring(0, 4).toInt(),
+   originalLanguage = this.originalLanguage,
+   rating = this.voteAverage,
+   genres = this.genreIds
+
  */
 
 fun ResultM.toDomain(): Movie {
    return Movie(
        id = this.id,
        poster = POSTER_POINT + this.posterPath,
-//       description = this.overview,
-//       title = this.title,
-//       releaseDate = this.releaseDate,//.substring(0, 4).toInt(),
-//       originalLanguage = this.originalLanguage,
-//       rating = this.voteAverage,
-//       genres = this.genreIds
+
    )
 }
 fun Movie.toEntity(type:MovieType):MovieEntity{
