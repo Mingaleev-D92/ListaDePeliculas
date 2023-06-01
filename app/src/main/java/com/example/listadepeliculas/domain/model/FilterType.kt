@@ -1,4 +1,4 @@
-package com.example.listadepeliculas.ui.home.screen.components
+package com.example.listadepeliculas.domain.model
 
 /**
  * @author : Mingaleev D

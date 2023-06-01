@@ -12,8 +12,8 @@ data class MovieEntity(
 )
 
 enum class MovieType {
-   UPCOMING,
-   TRENDING_POPULAR,
-   ENGLISH_LANG,
-   SPAIN_LANG
+    UPCOMING,
+    TRENDING_POPULAR,
+    ENGLISH_LANG,
+    SPAIN_LANG
 }

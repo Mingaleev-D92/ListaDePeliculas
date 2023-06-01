@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.listadepeliculas.R
-import com.example.listadepeliculas.domain.model.Movie
+import com.example.listadepeliculas.domain.model.FilterType
 
 /**
  * @author : Mingaleev D

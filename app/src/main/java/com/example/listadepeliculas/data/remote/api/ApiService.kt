@@ -8,7 +8,9 @@ import com.example.listadepeliculas.data.common.Constants.LANGUAGE_EN
 import com.example.listadepeliculas.data.common.Constants.LANGUAGE_ES
 import com.example.listadepeliculas.data.common.Constants.SORT_BY
 import com.example.listadepeliculas.data.remote.dto.MovieDtoResponse
+import com.example.listadepeliculas.data.remote.dto.details.DetailsDtoResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -44,5 +46,12 @@ interface ApiService {
        @Query("sort_by") SortBy: String = SORT_BY,
        @Query("original_language") origLang: String = LANGUAGE_ES,
        @Query("with_original_language") withOrigLang: String,
-   ):MovieDtoResponse
+   ): MovieDtoResponse
+
+   @GET("movie/{movie_id}")
+   suspend fun getDetailsByIdMovie(
+       @Path("movie_id") movieId: Int,
+       @Query("api_key") apiKey: String = BASE_API_KEY,
+       @Query("language") language: String = "ru-RU",
+   ): DetailsDtoResponse
 }
