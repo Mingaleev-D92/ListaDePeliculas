@@ -1,6 +1,8 @@
 package com.example.listadepeliculas.domain
 
+import com.example.listadepeliculas.domain.model.FilterType
 import com.example.listadepeliculas.domain.model.Movie
+import com.example.listadepeliculas.domain.model.MovieList
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -9,8 +11,10 @@ import kotlinx.coroutines.flow.Flow
  */
 
 interface MovieRepository {
-   fun getUpcomingMovie(): Flow<List<Movie>>
-   fun getPopularMovie(): Flow<List<Movie>>
-   fun getMovieEngFilter(withOrigLang: String): Flow<List<Movie>>
-   fun getMovieEsFilter(withOrigLang: String): Flow<List<Movie>>
+//   fun getUpcomingMovie(): Flow<List<Movie>>
+//   fun getPopularMovie(): Flow<List<Movie>>
+//   fun getMovieEngFilter(withOrigLang: String): Flow<List<Movie>>
+//   fun getMovieEsFilter(withOrigLang: String): Flow<List<Movie>>
+
+   fun getAllMovies(filterType:FilterType): Flow<MovieList>
 }
